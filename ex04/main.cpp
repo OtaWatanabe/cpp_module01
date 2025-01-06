@@ -20,7 +20,11 @@ std::string	processLine(std::string line, std::string search, std::string replac
 
 int	main(int argc, char *argv[]) {
 	if (argc != 4) {
-		std::cout << "3 aguments are needed." << std::endl;
+		std::cerr << "3 aguments are needed." << std::endl;
+		return 1;
+	}
+	if (argv[2][0] == 0) {
+		std::cerr << "Second argument must not be empty." << std::endl;
 		return 1;
 	}
 	std::ifstream	readFile(argv[1]);
@@ -35,7 +39,7 @@ int	main(int argc, char *argv[]) {
 		if (!readFile.eof()) whole += '\n';
 	}
 	readFile.close();
-	std::ofstream	writeFile(argv[1]);
+	std::ofstream	writeFile((std::string(argv[1]) + ".replace").c_str());
 	if (writeFile.fail()) {
 		std::cerr << argv[1] << ": file open failed " << argv[1] << std::endl;
 		return 1;
